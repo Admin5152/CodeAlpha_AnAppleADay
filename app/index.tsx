@@ -23,6 +23,7 @@ import {
   UIManager,
   View
 } from "react-native";
+import SplashScreen from "../components/SplashScreen";
 
 if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -94,6 +95,7 @@ const DARK_THEME = {
 
 export default function Index() {
   const [isReady, setIsReady] = useState(false);
+  const [showSplash, setShowSplash] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const theme = isDarkMode ? DARK_THEME : LIGHT_THEME;
 
@@ -491,6 +493,14 @@ export default function Index() {
       setIsModalVisible(false);
     }
   };
+
+  const handleSplashFinish = () => {
+    setShowSplash(false);
+  };
+
+  if (showSplash) {
+    return <SplashScreen onFinish={handleSplashFinish} />;
+  }
 
   if (!isReady) return <SafeAreaView style={styles.container} />; // Loading guard
 
